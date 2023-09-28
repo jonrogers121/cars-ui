@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
+import { GridLayout } from './components/GridLayout';
+import styled from 'styled-components';
+
+const AppWrapper = styled.div`
+  max-width: 1248px;
+`
 
 const App = () => {
   const [images, setImages] = useState();
@@ -18,14 +24,10 @@ const App = () => {
 
   return (
     <div className='app'>
-      {
-        images && images.map(img => (
-          <div key={img.id} >
-            <img src={`${img.url}.jpg`} alt=''/>
-            <img src={`${img.user.profile_image}.webp`} alt=''/>
-          </div>
-        ))
-      }
+      <AppWrapper>
+      {images &&
+      <GridLayout images={images} />}
+      </AppWrapper>
     </div>
   );
 }

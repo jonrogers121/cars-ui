@@ -1,0 +1,13 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #333;
+}
+
+.app {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    border: none;
+}
