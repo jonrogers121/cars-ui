@@ -3,6 +3,7 @@ import './App.css';
 import { GridLayout } from './components/GridLayout';
 import styled from 'styled-components';
 import { Spacer, StyledHeader, StyledSubHeader } from './styles';
+import { Loader } from 'semantic-ui-react';
 
 const AppWrapper = styled.div`
   max-width: 1248px;
@@ -22,6 +23,10 @@ const App = () => {
         console.error('Error:', error);
       });
   }, []);
+
+  if(!images) return (
+    <Loader active inline='centered' />
+  )
 
   return (
     <div className='app'>

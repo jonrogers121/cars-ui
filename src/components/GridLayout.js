@@ -1,5 +1,6 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import styled from "styled-components";
+import { Icon, Modal } from 'semantic-ui-react'
 
 const Main = styled.div`
   display: flex;
@@ -23,6 +24,7 @@ const Container = styled.div`
 `;
 
 const ImageCard = styled.div`
+cursor: pointer;
   position: relative;
   width: var(--s);
   margin: var(--m);
@@ -43,6 +45,42 @@ const ImageCard = styled.div`
   }
 `;
 
+const ModalHeader = styled.div`
+  display: flex;
+  img {
+    width: 120px;
+    height: 120px;
+    margin-right: 1rem;
+    border-radius: 50%;
+    border: 5px solid #333;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  p {
+    font-size: 1rem;
+    font-weight: 300;
+  }
+`;
+
+const ModalContent = styled.div`
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+  }
+`;
+
+const ModalActions = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  p {
+    text-align: left;
+  }
+`;
+
 const CloudinaryTransformedImage = ({ url, alt }) => {
   const CLOUD_NAME = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
   const TRANSFORMATION = "w_400,h_300,c_fill";
@@ -54,16 +92,65 @@ const CloudinaryTransformedImage = ({ url, alt }) => {
 };
 
 export const GridLayout = ({ images }) => {
+  const [modalOpen, setModalOpen] = useState(false)
+  const [modalContent, setModalContent] = useState({})
   const renderedImages = useMemo(() => {
-    return images.map(({ url, alt_description }, index) => (
-      <ImageCard key={index}>
+    return images.map(({ url, alt_description, description, likes, user: {profile_image, username, bio} }) => (
+      <ImageCard key={url} onClick={() => {
+        setModalOpen(true)
+        setModalContent({
+          likes,
+          caption: description,
+          profilePicture: `${profile_image}.webp`,
+          profileName: username,
+          profileCopy: bio,
+          mainImage: `${url}.jpg`,
+          mainImageAlt: alt_description
+        })
+      }}>
         <CloudinaryTransformedImage url={`${url}.webp`} alt={alt_description} />
       </ImageCard>
     ));
+    
   }, [images]);
+
+  const InfoModal = () => (
+    <Modal
+      onClose={() => setModalOpen(false)}
+      onOpen={() => setModalOpen(true)}
+      open={modalOpen}
+      size='tiny'
+    >
+      <Modal.Header>
+        <ModalHeader>
+          <div>
+            <img src={modalContent?.profilePicture} alt={modalContent?.profileName} />
+          </div>
+          <div>
+            <h2>{modalContent?.profileName}</h2>
+            <p>{modalContent?.profileCopy}</p>
+          </div>
+        </ModalHeader>
+      </Modal.Header>
+      <Modal.Content>
+        <Modal.Description>
+          <ModalContent>
+            <img src={modalContent?.mainImage} alt={modalContent?.mainImageAlt} />
+          </ModalContent>
+        </Modal.Description>
+      </Modal.Content>
+      <Modal.Actions>
+        <ModalActions>
+          <p><Icon name='like' color="red" />{modalContent?.likes}</p>
+          <p>{modalContent?.caption}</p>     
+        </ModalActions>
+      </Modal.Actions>
+    </Modal>
+  )
 
   return (
     <Main>
+     <InfoModal />
       <Container>{renderedImages}</Container>
     </Main>
   );
