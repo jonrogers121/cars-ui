@@ -39,7 +39,7 @@ const App = () => {
         <Spacer />
         <StyledSubHeader>Click on any image to find out more</StyledSubHeader>
         <Spacer />
-        {images && <GridLayout images={images} />}
+        <GridLayout images={images} />
         <FormWrapper>
           <Spacer />
           <StyledSubHeader>Fill in the form below</StyledSubHeader>
