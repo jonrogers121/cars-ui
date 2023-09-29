@@ -1,9 +1,26 @@
+## Developer Notes
+
+I have added the following dependencies to help with the development:
+
+Styled Components - a library that allows you to write CSS in JS while building custom components in Reactjs .
+
+Semantic UI - my favourite React component library
+
+Cloudinary - an image and video API for optimising the images. Please note to run this locally you will need to add a cloud name to your local .env file
+
+Performance improvements:
+
+The images were slow to load - to help with this I added lazy loading and memoization with the 'useMemo' hook.
+
+I also used the cloudinary api to optimise the images.
+
+Tests:
+
+I have added a sample test for the GridLayout component to demonstate my testing approach.
 
 # Motorway UI Test
 
-
 Welcome to the Motorway UI technical test. This test focuses on user experience, and your skills with HTML, CSS, a11y and leveraging browser APIs.
-
 
 ## Set up
 
@@ -22,7 +39,6 @@ After this, CRA will open a tab with the app running, usually `localhost:3000`. 
 - The server and CRA are watching the relevant files and will hot reload if any changes are made.
 
 - Feel free to modify or install whatever code you feel is necessary. If installing packages which are wrappers for native browsers APIs please leave a comment explaining why.
-
 
 ## Tasks
 
@@ -48,11 +64,9 @@ Modal to review full size images
 
 Image effects or filters
 
-
 ### 2. Performance
 
 The API that is returning images is rather slow. Show how it can be sped up, and show how you would measure the improvement in performance.
-
 
 ### 3. Forms
 
@@ -66,11 +80,9 @@ Add a form to your app with the following fields. The form doesn't need to submi
 - [ ] Favourite colour
 - [ ] Salary (using a range input)
 
-
 ## Time allowed
 
 We appreciate that your time is valuable and recommend you not spend more than 2 hours on these tasks.
-
 
 ## Notes
 
